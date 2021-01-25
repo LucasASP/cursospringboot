@@ -11,7 +11,7 @@ import com.lucasasp.cursospringboot.repositories.CategoriaRepository;
 @Service
 public class CategoriaService {
 	
-	@Autowired
+	@Autowired //Para instanciar automaticamente
 	private CategoriaRepository repo;
 
 	public Categoria buscar(Integer id) {

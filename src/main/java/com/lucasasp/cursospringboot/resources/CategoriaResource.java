@@ -17,7 +17,7 @@ import com.lucasasp.cursospringboot.services.CategoriaService;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@Autowired
+	@Autowired //Para instanciar automaticamente
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
