@@ -1,8 +1,5 @@
 package com.lucasasp.cursospringboot.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,19 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lucasasp.cursospringboot.domain.Categoria;
 import com.lucasasp.cursospringboot.services.CategoriaService;
 
+//@RestController define uma classe como um Controller REST do Spring MVC
+//@RequestMapping anotação para definir mapeamentos
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 	
-	@Autowired //Para instanciar automaticamente
+	//@Autowired serve para instanciar uma classe automaticamente
+	@Autowired 
 	private CategoriaService service;
-	
+
+	//@RequestMapping anotação para definir mapeamentos
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {    
 		// ResponseEntity objeto complexo que vai ter códigos HTTP de resposta e varias informações do protocolo HTTP
 		
 		Categoria obj = service.buscar(id);
 		
+		//ResponseEntity.ok() informa que a operação ocorreu com sucesso e essa resposta vai ter como corpo o objeto que buscamos
 		return ResponseEntity.ok().body(obj);
 	}
 

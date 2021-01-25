@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 import com.lucasasp.cursospringboot.domain.Categoria;
 import com.lucasasp.cursospringboot.repositories.CategoriaRepository;
 
+//@Service serve para definir uma classe como pertencente à camada de Serviço da aplicação.
 @Service
 public class CategoriaService {
 	
-	@Autowired //Para instanciar automaticamente
+	//Injeção de dependência
+	//@Autowired serve para instanciar uma classe automaticamente
+	@Autowired 
 	private CategoriaRepository repo;
 
 	public Categoria buscar(Integer id) {

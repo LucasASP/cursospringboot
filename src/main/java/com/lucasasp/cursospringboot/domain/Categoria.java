@@ -7,10 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+//@Entity indica que essa classe será uma entidade do JPA
 @Entity
 public class Categoria implements Serializable {
+	//Serializable interface que diz que os objetos dessa classe poderão ser convertidos para uma sequencia de bytes serve para os objetos serem gravados em arquivos, para trafegar em rede e assim por diante
+	
+	//Quando a classe implemanta Serializable ela tem que ter um número de versão padrão
 	private static final long serialVersionUID = 1L;
 	
+	//@Id é utilizada para informar ao JPA qual campo/atributo de uma entidade estará relacionado à chave primária da respectiva tabela no banco de dados
+	//@GeneratedValue é utilizada para informar que a geração do valor do identificador único da entidade será gerenciada pelo provedor de persistência
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
