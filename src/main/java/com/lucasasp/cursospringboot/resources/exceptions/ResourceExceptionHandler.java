@@ -1,0 +1,29 @@
+package com.lucasasp.cursospringboot.resources.exceptions;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.lucasasp.cursospringboot.services.exceptions.ObjectNotFoundException;
+
+//classe auxiliar que intercepta as exceções 
+//ResourceExceptionHandler é o manipulador de exceções dos recursos
+//usamos a annotation @ControllerAdvice sempre que precisar concentrar algum tratamento que seria espalhado em todos os controllers.
+//toda vez que um controller lançar uma exception, caso ninguém forneça um tratamento mais específico, ela vai cair no tratamento global do @ControllerAdvice
+@ControllerAdvice
+public class ResourceExceptionHandler {
+
+	//esse metodo recebe a exceção ObjectNotFoundException e as informações da requisição e ela obrigatoriamente tem que ter essa assinatura
+	//para o caso de objeto nao encontrado
+	//@ExceptionHandler indica que é um tratador de exceção do tipo ObjectNotFoundException.class
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+		
+		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+	
+}

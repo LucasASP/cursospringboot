@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 //@Entity indica que essa classe será uma entidade do JPA
 @Entity
 public class Categoria implements Serializable {
@@ -26,8 +28,14 @@ public class Categoria implements Serializable {
 	private	String nome;
 
 	//Quado temos uma tabela muitos para muitos temos que criar uma terceira tabela contendo os ids das duas tabelas
-	//@ManyToMany serve para gerar uma tabela que resolva um relacionamento  N - N entre duas classes
-	//Essa terceira tabela foi nomeada em Produto no atributo categorias
+	/**@ManyToMany serve para gerar uma tabela que resolva um relacionamento  N - N entre duas classes
+		Essa terceira tabela foi nomeada em Produto no atributo categorias**/
+	/**@JsonManagedReference evita uma referencia ciclica (cada categoria tem uma lista de produto e cada produto tem uma lista de categoria)
+		quando o nosso sistema vai serializar o Json daqui ele fica acessando categoria, pega os produtos, vai no produto e pega as categorias e assim indefinidamente
+		tratamos essa referencia ciclica com o JsonManagedReference, ele informa que está tudo bem serializar o Json
+		fazemos isso no lado que queremos que venham os objetos associados, no outreo lado (Produto), colocamos a anotação @JsonBackReference
+		Proteção para referência cíclica na serialização Json:**/
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList();
 	
