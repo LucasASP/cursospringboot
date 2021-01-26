@@ -37,7 +37,7 @@ public class Categoria implements Serializable {
 		Proteção para referência cíclica na serialização Json:**/
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList();
+	private List<Produto> produtos = new ArrayList<>();
 	
 	public Categoria() {
 	}

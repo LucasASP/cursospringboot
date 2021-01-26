@@ -34,7 +34,7 @@ public class Produto implements Serializable {
 		joinColumns = @JoinColumn(name="produto_id"), //Define a chave extrangeira que referencia Produto
 		inverseJoinColumns = @JoinColumn(name="categoria_id") //Define a chave extrangeira que referencia Categoria
 		) 
-	private List<Categoria> categorias = new ArrayList();
+	private List<Categoria> categorias = new ArrayList<>();
 	
 	public Produto() {
 	}
