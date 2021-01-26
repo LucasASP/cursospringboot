@@ -26,10 +26,10 @@ public class CategoriaResource {
 
 	//@RequestMapping anotação para definir mapeamentos
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {    
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {    
 		// ResponseEntity objeto complexo que vai ter códigos HTTP de resposta e varias informações do protocolo HTTP
 		
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		
 		//ResponseEntity.ok() informa que a operação ocorreu com sucesso e essa resposta vai ter como corpo o objeto que buscamos
 		return ResponseEntity.ok().body(obj);
@@ -46,8 +46,15 @@ public class CategoriaResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		
-		//created gora o codigo 201 de criação e build gera a resposta
+		//created gera o codigo 201 de criação e build gera a resposta
 		return ResponseEntity.created(uri).build();
+	}
+
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 
 }

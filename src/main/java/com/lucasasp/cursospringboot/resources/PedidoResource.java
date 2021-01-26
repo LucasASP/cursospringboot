@@ -22,10 +22,10 @@ public class PedidoResource {
 
 	//@RequestMapping anotação para definir mapeamentos
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {    
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {    
 		// ResponseEntity objeto complexo que vai ter códigos HTTP de resposta e varias informações do protocolo HTTP
 		
-		Pedido obj = service.buscar(id);
+		Pedido obj = service.find(id);
 		
 		//ResponseEntity.ok() informa que a operação ocorreu com sucesso e essa resposta vai ter como corpo o objeto que buscamos
 		return ResponseEntity.ok().body(obj);
