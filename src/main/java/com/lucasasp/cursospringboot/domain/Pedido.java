@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -32,11 +30,9 @@ public class Pedido implements Serializable {
 
 	//necessário o cascade pq se nao da um erro de entidade transiente quando vc vai salvar um pedido e o pagamento dele
 	//garantimos que o id do pagamento será o mesmo id do pedido
-	@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;

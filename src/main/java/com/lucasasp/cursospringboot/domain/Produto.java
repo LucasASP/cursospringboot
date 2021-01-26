@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -31,8 +30,8 @@ public class Produto implements Serializable {
 	//Quado temos uma tabela muitos para muitos temos que criar uma terceira tabela contendo os ids das duas tabelas
 	//@ManyToMany serve para gerar uma tabela que resolva um relacionamento  N - N entre duas classes
 	//@JoinTable é a responsável por dar a possibilidade de nomear a tabela e as colunas
-	//@JsonBackReference faz, do outro lado da assciação ja foram buscados os objetos, então agora não busco mais, ele omite então a lista de categorias para cada produto
-	@JsonBackReference
+	//@JsonIgnore - Ignorada a funcionalidade de serialização (nao permite a criação de Json). Protege contra serialização Json cíclica.
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="PRODUTO_CATEGORIA", 
 		joinColumns = @JoinColumn(name="produto_id"), //Define a chave extrangeira que referencia Produto

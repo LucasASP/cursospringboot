@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,8 +20,6 @@ public class Cidade implements Serializable {
 	
 	//@ManyToOne indica associação muitos para um. Muitas cidades para um estado
 	//@JoinColumn ndica que a classe na qual você está utilizando-a é a dona ou o lado forte do relacionamento. Isso apenas adciona uma coluna estrangeira ao lado forte.
-	//@JsonManagedReference - Proteger contra serialização Json cíclica
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="estado_id")
 	private Estado estado;
