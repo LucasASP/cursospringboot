@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.lucasasp.cursospringboot.domain.Categoria;
+import com.lucasasp.cursospringboot.dto.CategoriaDTO;
 import com.lucasasp.cursospringboot.repositories.CategoriaRepository;
 import com.lucasasp.cursospringboot.services.exceptions.DataIntegrityException;
 import com.lucasasp.cursospringboot.services.exceptions.ObjectNotFoundException;
@@ -65,5 +66,10 @@ public class CategoriaService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), OrderBy);
 		//Aqui automaticamente o findAll do JPA vai considerar PageRequest como argumento, uma sobrecarga de métodos, e ira nos retornar a pagina
 		return repo.findAll(pageRequest);
+	}
+	
+	//metodo auxiliar que instancia uma Categoria a partir de um DTO
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
