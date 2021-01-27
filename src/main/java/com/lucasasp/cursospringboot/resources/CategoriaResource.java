@@ -24,6 +24,7 @@ public class CategoriaResource {
 	@Autowired 
 	private CategoriaService service;
 
+	//Retorna uma categoria
 	//@RequestMapping anotação para definir mapeamentos
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {    
@@ -34,7 +35,8 @@ public class CategoriaResource {
 		//ResponseEntity.ok() informa que a operação ocorreu com sucesso e essa resposta vai ter como corpo o objeto que buscamos
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
+	//Adiciona uma categoria
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) { //@RequestBody faz com que o objeto Json seja convertido para java automaticamente
 		obj = service.insert(obj);
@@ -50,6 +52,7 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 
+	//Atualiza uma categoria
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
 		obj.setId(id);
@@ -57,4 +60,10 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	//Deleta uma categoria
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) { 
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 }
