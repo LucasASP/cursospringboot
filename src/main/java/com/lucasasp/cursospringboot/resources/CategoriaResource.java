@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -78,9 +80,23 @@ public class CategoriaResource {
 		//Queremos apenas que as categorias sejam listadas, para isso criamos um DTO sem a lista dos produtos
 		//Convertemos uma lista de Categoria em uma lista de CategoriaDTO
 		//Para isso percorremos toda a lista de Categoria a transformando em CategoriaDTO (codigo abaixo transforma uma lista em outra)
-		//Streams API, recurso que oferece ao desenvolvedor a possibilidade de trabalhar com conjuntos de elementos de forma mais simples e com um número menor de linhas de código.
-		//A proposta em torno da Streams API é reduzir a preocupação do desenvolvedor com a forma de implementar controle de fluxo ao lidar com coleções, deixando isso a cargo da API. A ideia é iterar sobre essas coleções de objetos e, a cada elemento, realizar alguma ação, seja ela de filtragem, mapeamento, transformação, etc. Caberá ao desenvolvedor apenas definir qual ação será realizada sobre o objeto.
+		//Streams API (https://www.devmedia.com.br/java-streams-api-manipulando-colecoes-de-forma-eficiente/37630), recurso que oferece ao desenvolvedor a possibilidade de trabalhar com conjuntos de elementos de forma mais simples e com um número menor de linhas de código.
 		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
+
+	//Buscando página
+	@RequestMapping(value="/page", method=RequestMethod.GET)
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
+			@RequestParam(value="page", defaultValue = "0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue = "ASC") String direction) {    
+		//@RequestParam tornam parametros opcionais na url (ex: /categorias/page?page=0&linesPerPage=20)
+		
+		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		//Page não precisa de stream
+		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
 }
