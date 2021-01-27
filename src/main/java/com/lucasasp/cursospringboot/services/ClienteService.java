@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lucasasp.cursospringboot.domain.Cidade;
 import com.lucasasp.cursospringboot.domain.Cliente;
@@ -44,6 +45,7 @@ public class ClienteService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
+	@Transactional //para garantir que ele vai salvar tanto o cliente quanto os endereços na mesma transação de dados
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
 		//salvamos o cliente e depois os endereços
