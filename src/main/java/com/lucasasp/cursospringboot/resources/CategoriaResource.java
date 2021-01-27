@@ -1,6 +1,8 @@
 package com.lucasasp.cursospringboot.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lucasasp.cursospringboot.domain.Categoria;
+import com.lucasasp.cursospringboot.dto.CategoriaDTO;
 import com.lucasasp.cursospringboot.services.CategoriaService;
 
 //@RestController define uma classe como um Controller REST do Spring MVC
@@ -65,5 +68,19 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) { 
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	//Buscando todas as categorias
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {    
+		List<Categoria> list = service.findAll();
+		
+		//Queremos apenas que as categorias sejam listadas, para isso criamos um DTO sem a lista dos produtos
+		//Convertemos uma lista de Categoria em uma lista de CategoriaDTO
+		//Para isso percorremos toda a lista de Categoria a transformando em CategoriaDTO (codigo abaixo transforma uma lista em outra)
+		//Streams API, recurso que oferece ao desenvolvedor a possibilidade de trabalhar com conjuntos de elementos de forma mais simples e com um número menor de linhas de código.
+		//A proposta em torno da Streams API é reduzir a preocupação do desenvolvedor com a forma de implementar controle de fluxo ao lidar com coleções, deixando isso a cargo da API. A ideia é iterar sobre essas coleções de objetos e, a cada elemento, realizar alguma ação, seja ela de filtragem, mapeamento, transformação, etc. Caberá ao desenvolvedor apenas definir qual ação será realizada sobre o objeto.
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 }
