@@ -33,6 +33,7 @@ public class Cliente implements Serializable {
 	//cascade determina qual comportamento em cascata dessa assiciação - nesse caso quando apagar o cliente apagamos em cascata os endereços
 	//ALL indica que toda operação que aplicar em cliente será refletida nos endereços
 	//Ou seja, quando tiver uma regra de negócio q vc pode apagar em cascata é so usar cascade=CascadeType.ALL que o JPA ja faz a regrinha la no BD automaticamente
+	//quando quiser barrar a deleção de uma entidade relacionada é só deixar do jeito padrão que o Spring Data não deixa apagar
 	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
