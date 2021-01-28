@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -29,7 +30,10 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	@OneToMany(mappedBy = "cliente")
+	//cascade determina qual comportamento em cascata dessa assiciação - nesse caso quando apagar o cliente apagamos em cascata os endereços
+	//ALL indica que toda operação que aplicar em cliente será refletida nos endereços
+	//Ou seja, quando tiver uma regra de negócio q vc pode apagar em cascata é so usar cascade=CascadeType.ALL que o JPA ja faz a regrinha la no BD automaticamente
+	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	//Entidade fraca - Criada como uma coleção de string para telefones, o Set nao permite repetições
