@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,10 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	// @Column(unique=true) faz o banco de dados garantir que não havera repetição nesse campo
+	// mas fazendo so isso teremos pouco controle sobre a exceção que vai ser lançada e nao vamos ter muito jeito de tratar esse exceção e dar uma msg personalizada para o nosso cliente
+	@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;

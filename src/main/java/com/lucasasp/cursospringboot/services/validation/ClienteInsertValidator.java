@@ -6,14 +6,21 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.lucasasp.cursospringboot.domain.Cliente;
 import com.lucasasp.cursospringboot.domain.enums.TipoCliente;
 import com.lucasasp.cursospringboot.dto.ClienteNewDTO;
+import com.lucasasp.cursospringboot.repositories.ClienteRepository;
 import com.lucasasp.cursospringboot.resources.exceptions.FieldMessage;
 import com.lucasasp.cursospringboot.services.validation.utils.BR;
 
 // no pdf tem um código pre definido
 // ConstraintValidator recebe o nome da nossa anotação e o tipo da classe que vai aceitar nossa anotação
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+	
+	@Autowired
+	private ClienteRepository repo;
 	
 	// nesse metodo podemos colocar alguma programação de inicialização
 	@Override
@@ -37,6 +44,11 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
+		}
+		
+		Cliente aux = repo.findByEmail(objDto.getEmail());
+		if (aux != null) {
+			list.add(new FieldMessage("email", "Email já existente"));
 		}
 		
 		// aqui inserimos os erros correspondentes pegando as mensagens e o nome do campo
