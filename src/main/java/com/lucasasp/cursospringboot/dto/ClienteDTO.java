@@ -8,7 +8,10 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.lucasasp.cursospringboot.domain.Cliente;
+import com.lucasasp.cursospringboot.services.validation.ClienteUpdate;
 
+// anotação personalizada para verificar email existente na atualização
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
