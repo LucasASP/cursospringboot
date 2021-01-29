@@ -2,12 +2,14 @@ package com.lucasasp.cursospringboot.services.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.lucasasp.cursospringboot.domain.Cliente;
 import com.lucasasp.cursospringboot.dto.ClienteDTO;
@@ -35,6 +37,10 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	// @Valid agora também vai depender do que colocarmos no método isValid
 	@Override
 	public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
+		
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Integer uriId = Integer.parseInt(map.get("id"));
 		
 		// vamos inserir os erros no metodo FieldMessage que criamos
 		List<FieldMessage> list = new ArrayList<>();
