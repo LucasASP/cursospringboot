@@ -33,6 +33,11 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
+	// colocamos get no nome para que ele seja reconhecido pelo Json e serializado, assim ele vai aparecer subtotal no item de pedido
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	public ItemPedidoPK getId() {
 		return id;
 	}
